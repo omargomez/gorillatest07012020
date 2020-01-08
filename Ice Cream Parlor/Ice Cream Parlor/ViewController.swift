@@ -14,6 +14,7 @@ class MenuCell: UICollectionViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var value: UILabel!
     @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var circleView: UIView!
 }
 
 struct MenuItem : Hashable {
@@ -69,8 +70,14 @@ class ViewController: UIViewController {
             
             cell.title.text = item.title
             cell.value.text = item.price
-            let img = UIImage(named: item.shape) ?? UIImage(named: "popsicle")
+            let img =  UIImage(named: item.shape) ?? UIImage(named: "popsicle")
             cell.image.image = img
+            
+            cell.circleView.layer.cornerRadius = cell.circleView.frame.size.width/2
+            cell.circleView.clipsToBounds = true
+
+            cell.circleView.layer.borderColor = UIColor.white.cgColor
+            cell.circleView.backgroundColor = item.backgroundColor
 
             cell.layer.borderWidth = 1.0
             cell.layer.borderColor = UIColor.gray.cgColor
