@@ -69,7 +69,7 @@ class ViewController: UIViewController {
             
             cell.title.text = item.title
             cell.value.text = item.price
-            let img = UIImage(named: item.shape)
+            let img = UIImage(named: item.shape) ?? UIImage(named: "popsicle")
             cell.image.image = img
 
             cell.layer.borderWidth = 1.0
@@ -92,12 +92,18 @@ class ViewController: UIViewController {
                 var color = UIColor.gray
                 if let strColor = $0["name2"] {
                     switch strColor {
-                    case "Fuscia", "Puce":
+                    case "Fuscia", "Puce", "Pink":
                         color = UIColor.systemPink
-                    case "Indigo", "Blue":
+                    case "Indigo":
+                        color = UIColor.systemIndigo
+                    case "Blue":
                         color = UIColor.blue
                     case "Khaki", "Yellow":
                         color = UIColor.yellow
+                    case "Turquoise":
+                        color = UIColor.cyan
+                    case "Red":
+                        color = UIColor.systemRed
                     case "Crimson":
                         color = UIColor.red
                     case "Green":
@@ -106,6 +112,8 @@ class ViewController: UIViewController {
                         color = UIColor.cyan
                     case "Teal":
                         color = UIColor.systemTeal
+                    case "Orange":
+                        color = UIColor.systemOrange
                     case "Violet", "Purple":
                         color = UIColor.purple
                     default:
@@ -120,7 +128,9 @@ class ViewController: UIViewController {
                 let title = "\(name) \(name2)"
                 let price = $0["price"] ?? "??"
                 
-                return MenuItem( id:UUID().uuidString,  backgroundColor: color, shape: shape, title: title, price: price )
+                let result = MenuItem( id:UUID().uuidString,  backgroundColor: color, shape: shape, title: title, price: price )
+                print("result: \(result)")
+                return result
 
             }
             
