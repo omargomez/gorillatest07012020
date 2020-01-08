@@ -8,10 +8,11 @@
 
 import UIKit
 
-class NumberCell: UICollectionViewCell {
-    static let reuseIdentifier = String(describing: NumberCell.self)
+class MenuCell: UICollectionViewCell {
+    static let reuseIdentifier = String(describing: MenuCell.self)
     
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var value: UILabel!
     @IBOutlet weak var image: UIImageView!
 }
 
@@ -21,6 +22,7 @@ struct MenuItem : Hashable {
     let backgroundColor: UIColor
     let shape: String
     let title: String
+    let price: String
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(id.hashValue)
@@ -61,11 +63,12 @@ class ViewController: UIViewController {
         
         dataSource = UICollectionViewDiffableDataSource<Int, MenuItem>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NumberCell.reuseIdentifier, for: indexPath) as? NumberCell else {
-                fatalError("Cannot create new cell")
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MenuCell.reuseIdentifier, for: indexPath) as? MenuCell else {
+                fatalError("No cell!")
             }
             
-            cell.label.text = item.title
+            cell.title.text = item.title
+            cell.value.text = item.price
             let img = UIImage(named: item.shape)
             cell.image.image = img
 
@@ -115,8 +118,9 @@ class ViewController: UIViewController {
                 let name = $0["name1"] ?? "??"
                 let name2 = $0["name2"] ?? "??"
                 let title = "\(name) \(name2)"
+                let price = $0["price"] ?? "??"
                 
-                return MenuItem( id:UUID().uuidString,  backgroundColor: color, shape: shape, title: title )
+                return MenuItem( id:UUID().uuidString,  backgroundColor: color, shape: shape, title: title, price: price )
 
             }
             
